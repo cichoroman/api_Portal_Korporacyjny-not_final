@@ -1,0 +1,24 @@
+ CREATE TABLE posts (
+ id int(11) not null PRIMARY KEY AUTO_INCREMENT,
+ subject varchar(128)not null,
+ content varchar(1000) not null,
+ date datetime not null
+ );
+
+ CREATE TABLE users (
+    id int(20) not null AUTO_INCREMENT PRIMARY KEY,
+    username varchar(20) not null,
+    pwd varchar(20) not null
+
+    );
+
+    INSERT INTO `posts`(`subject`, `content`, `date`) VALUES ('this is the subject','Cras dignissim elementum diam. Quisque at scelerisque nulla, vitae dictum risus. Nullam in urna vitae metus accumsan bibendum vitae cursus massa. Praesent fermentum, justo et gravida consectetur, nunc turpis iaculis erat, a mattis tellus arcu ut est. Nam auctor ut eros vitae imperdiet. Etiam feugiat libero et mi imperdiet volutpat. Sed nibh nisl, dictum vitae aliquam at, ultrices non mauris. Donec et consectetur metus, vel sagittis sapien. Nullam quis efficitur leo. Donec fringilla lectus auctor ullamcorper vulputate. ',Now());
+
+    UPDATE posts
+    SET subject='This is a test', content='This is the content'
+    WHERE  id='1
+
+    DELETE FROM posts
+    WHERE id='1'
+
+    SELECT * FROM `posts` ORDER BY id DESC 
