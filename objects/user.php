@@ -1,15 +1,16 @@
 <?php
-class post{
+class user{
 
     // database connection and table name
     private $conn;
-    private $table_name = "posts";
+    private $table_name = "users";
 
     // object properties
-    public $id;
-    public $title;
-    public $content;
-    public $selectedTopic;
+    public $idUsers;
+    public $uidUsers;
+    public $emailUsers;
+    public $pwdUsers;
+    public $hashPwd;
 
 
     // constructor with $db as database connection
@@ -38,23 +39,26 @@ class post{
 // create product
     function create(){
 
-
-
+        // query to insert record
+        $query = "INSERT INTO
+                " . $this->table_name . "
+            SET
+                uidUsers=:uidUsers, emailUsers=:emailUsers, pwdUsers=:pwdUsers";
 
         // prepare query
-        $stmt = $this->conn->prepare(  "INSERT INTO   " . $this->table_name . " (title, content, selectedTopic)
-VALUES (:title, :content, :selectedTopic)");
+        $stmt = $this->conn->prepare($query);
 
         // sanitize
-        $this->title=htmlspecialchars(strip_tags($this->title));
-        $this->content=htmlspecialchars(strip_tags($this->content));
-        $this->selectedTopic=htmlspecialchars(strip_tags($this->selectedTopic));
+        $this->uidUsers=htmlspecialchars(strip_tags($this->uidUsers));
+        $this->emailUsers=htmlspecialchars(strip_tags($this->emailUsers));
+        $this->pwdUsers=htmlspecialchars(strip_tags($this->pwdUsers));
 
+        $hashPwd = password_hash($pwdUsers, PASSWORD_DEFAULT);
 
         // bind values
-        $stmt->bindParam(":title", $this->title);
-        $stmt->bindParam(":content", $this->content);
-        $stmt->bindParam(":selectedTopic", $this->selectedTopic);
+        $stmt->bindParam(":uidUsers", $this->uidUsers);
+        $stmt->bindParam(":emailUsers", $this->emailUsers);
+        $stmt->bindParam(":pwdUsers", $this->$hashPwd);
 
         // execute query
         if($stmt->execute()){
@@ -65,7 +69,7 @@ VALUES (:title, :content, :selectedTopic)");
 
     }
 // used when filling up the update product form
-    function readOne(){
+/*    function readOne(){
 
         // query to read single record
         $query = "SELECT
@@ -123,5 +127,5 @@ VALUES (:title, :content, :selectedTopic)");
 
     }
 // search products
-
+*/
 }

@@ -1,6 +1,5 @@
 <?php
 // required headers
-
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: POST");
@@ -11,31 +10,32 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 include_once '../config/database.php';
 
 // instantiate product object
-include_once '../objects/post.php';
+include_once '../objects/user.php';
 
 $database = new Database();
 $db = $database->getConnection();
 
-$post = new Post($db);
+$user = new User($db);
 
 // get posted data
 $data = json_decode(file_get_contents("php://input"));
 
 // make sure data is not empty
 if(
-    !empty($data->title) &&
-    !empty($data->content) &&
-    !empty($data->selectedTopic)
+    !empty($data->uidUsers) &&
+    !empty($data->emailUsers) &&
+    !empty($data->pwdUsers)
 ){
 
     // set product property values
-    $post->title = $data->title;
-    $post->content = $data->content;
-    $post->selectedTopic = $data->selectedTopic;
+    $user->uidUsers = $user->uidUsers;
+    $user->emailUsers = $user->emailUsers;
+    $user->pwdUsers = $user->pwdUsers;
+
 
 
     // create the product
-    if($post->create()){
+    if($user->create()){
 
         // set response code - 201 created
         http_response_code(201);
