@@ -12,38 +12,29 @@ include_once '../config/database.php';
 
 // instantiate product object
 include_once '../objects/post.php';
-
 $database = new Database();
 $db = $database->getConnection();
-
 $post = new Post($db);
-
 // get posted data
 $data = json_decode(file_get_contents("php://input"));
-
 // make sure data is not empty
 if(
     !empty($data->title) &&
     !empty($data->content) &&
     !empty($data->selectedTopic)
 ){
-
     // set product property values
     $post->title = $data->title;
     $post->content = $data->content;
     $post->selectedTopic = $data->selectedTopic;
 
-
     // create the product
     if($post->create()){
-
         // set response code - 201 created
         http_response_code(201);
-
         // tell the user
-        echo json_encode(array("message" => "Product was created."));
+        echo json_encode(array("message" => "Post was created."));
     }
-
     // if unable to create the product, tell the user
     else{
 
