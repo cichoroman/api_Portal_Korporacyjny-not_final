@@ -1,6 +1,5 @@
 <?php
 // required headers
-
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: POST");
@@ -9,8 +8,6 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 
 // get database connection
 include_once '../config/database.php';
-
-// instantiate product object
 include_once '../objects/meating.php';
 $database = new Database();
 $db = $database->getConnection();
@@ -28,13 +25,12 @@ if(
     $meating->title = $data->title;
     $meating->description = $data->description;
     $meating->selectedTopic = $data->selectedTopic;
-      $meating->date = $data->date;
-    // create the product
+    $meating->date = $data->date;
+    // create the meating
     if($meating->create()){
         // set response code - 201 created
         http_response_code(201);
-        // tell the user
-        echo json_encode(array("message" => "Post was created."));
+        echo json_encode(array("message" => "Meating was created."));
     }
     // if unable to create the product, tell the user
     else{
@@ -43,7 +39,7 @@ if(
         http_response_code(503);
 
         // tell the user
-        echo json_encode(array("message" => "Unable to create product."));
+        echo json_encode(array("message" => "Unable to create meating."));
     }
 }
 
@@ -54,6 +50,6 @@ else{
     http_response_code(400);
 
     // tell the user
-    echo json_encode(array("message" => "Unable to create product. Data is incomplete."));
+    echo json_encode(array("message" => "Unable to create meating. Data is incomplete."));
 }
 ?>
