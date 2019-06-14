@@ -21,13 +21,14 @@ $data = json_decode(file_get_contents("php://input"));
 if(
     !empty($data->title) &&
     !empty($data->description) &&
-    !empty($data->selectedTopic)
+    !empty($data->selectedTopic) &&
+    !empty($data->date)
 ){
     // set product property values
     $meating->title = $data->title;
     $meating->description = $data->description;
     $meating->selectedTopic = $data->selectedTopic;
-
+      $meating->date = $data->date;
     // create the product
     if($meating->create()){
         // set response code - 201 created

@@ -10,6 +10,7 @@ class Meating{
     public $title;
     public $description;
     public $selectedTopic;
+    public $date;
 
 
     // constructor with $db as database connection
@@ -42,19 +43,22 @@ class Meating{
 
 
         // prepare query
-        $stmt = $this->conn->prepare(  "INSERT INTO   " . $this->table_name . " (title, description, selectedTopic)
-VALUES (:title, :description, :selectedTopic)");
+        $stmt = $this->conn->prepare(  "INSERT INTO   " . $this->table_name . " (title, description, selectedTopic, date)
+VALUES (:title, :description, :selectedTopic, :date)");
 
         // sanitize
         $this->title=htmlspecialchars(strip_tags($this->title));
         $this->description=htmlspecialchars(strip_tags($this->description));
         $this->selectedTopic=htmlspecialchars(strip_tags($this->selectedTopic));
+        $this->date=htmlspecialchars(strip_tags($this->date));
+
 
 
         // bind values
         $stmt->bindParam(":title", $this->title);
         $stmt->bindParam(":description", $this->description);
         $stmt->bindParam(":selectedTopic", $this->selectedTopic);
+        $stmt->bindParam(":date", $this->date);
         // execute query
         if($stmt->execute()){
             return true;
@@ -93,7 +97,7 @@ VALUES (:title, :description, :selectedTopic)");
         $this->title = $row['title'];
         $this->description = $row['description'];
         $this->selectedTopic = $row['selectedTopic'];
-
+        $this->date = $row['date'];
     }
 // update the product
 
