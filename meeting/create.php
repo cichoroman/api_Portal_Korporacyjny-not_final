@@ -8,48 +8,46 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 
 // get database connection
 include_once '../config/database.php';
-include_once '../objects/meating.php';
+include_once '../objects/meeting.php';
 $database = new Database();
 $db = $database->getConnection();
-$meating = new Meating($db);
+$meeting = new meeting($db);
 // get posted data
 $data = json_decode(file_get_contents("php://input"));
 // make sure data is not empty
-if(
-    !empty($data->title) &&
+if( !empty($data->title) &&
     !empty($data->description) &&
     !empty($data->selectedTopic) &&
-    !empty($data->date)
-){
-    // set product property values
-    $meating->title = $data->title;
-    $meating->description = $data->description;
-    $meating->selectedTopic = $data->selectedTopic;
-    $meating->date = $data->date;
-    // create the meating
-    if($meating->create()){
+    !empty($data->date))
+    {// set property values
+      $meeting->title = $data->title;
+      $meeting->description = $data->description;
+      $meeting->selectedTopic = $data->selectedTopic;
+      $meeting->date = $data->date;
+    // create the meeting
+      if($meeting->create()){
         // set response code - 201 created
-        http_response_code(201);
-        echo json_encode(array("message" => "Meating was created."));
-    }
+          http_response_code(201);
+          echo json_encode(array("message" => "meeting was created."));
+        }
     // if unable to create the product, tell the user
-    else{
+      else{
 
         // set response code - 503 service unavailable
-        http_response_code(503);
+          http_response_code(503);
 
         // tell the user
-        echo json_encode(array("message" => "Unable to create meating."));
+          echo json_encode(array("message" => "Unable to create meeting."));
+        }
     }
-}
 
 // tell the user data is incomplete
-else{
+  else{
 
     // set response code - 400 bad request
-    http_response_code(400);
+      http_response_code(400);
 
     // tell the user
-    echo json_encode(array("message" => "Unable to create meating. Data is incomplete."));
-}
+      echo json_encode(array("message" => "Unable to create meeting. Data is incomplete."));
+  }
 ?>
